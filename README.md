@@ -9,6 +9,12 @@ A C# console application for managing a movie registry in SQL Server. The applic
 - Add a movie and select an existing genre from the database.
 - Remove a selected movie.
 
+## Movie list
+
+The application displays sample movies with their release years and genre names from the related database tables.
+
+![Movie list showing titles, release years, and genres](docs/images/movie-list.png)
+
 ## Requirements
 
 - .NET 10 SDK
