@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReelRegistry.UI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,13 +18,9 @@ namespace ReelRegistry.Services
                     case "View all movies":
                         var movieRepository = new Repositories.MovieRepository();
                         var movies = movieRepository.GetAllMovies();
-                        foreach (var movie in movies)
-                        {
-                            Console.WriteLine($"Title: {movie.Title}, Year: {movie.Year}");
-                        }
+                        DisplayMovieMenu.DisplayMovies(movies);
                         break;
-                    case "Search for a movie":
-                        
+                    case "Search for a movie":                       
                         
 
                         break;

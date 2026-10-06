@@ -25,7 +25,7 @@ namespace ReelRegistry.UI
             {
                 Title = title,
                 Year = year,
-                GenreId = GetGenreId(genre)
+                //GenreId = GenreController.GetGenreId(genre)
             };
         }
     }
