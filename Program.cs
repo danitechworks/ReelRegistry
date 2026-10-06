@@ -6,4 +6,4 @@ using ReelRegistry.UI;
 using Spectre.Console;
 using ReelRegistry.Services;
 
-AppService.RunApp();
+await AppService.RunAppAsync();

@@ -9,7 +9,7 @@ namespace ReelRegistry.Services
     public class AppService
     {
 
-        public static void RunApp()
+        public static async Task RunAppAsync()
         {
             bool running = true;
 
@@ -23,7 +23,7 @@ namespace ReelRegistry.Services
                 {
                     case "View all movies":
                         {
-                            var movieList = movieRepository.GetAllMovies();
+                            var movieList = movieRepository.GetAllMoviesAsync().Result;
                             DisplayMovieMenu.DisplayMovies(movieList);
                             break;
                         }
@@ -46,7 +46,7 @@ namespace ReelRegistry.Services
                         }
                     case "Remove a movie":
                         {
-                            var movieList = movieRepository.GetAllMovies();
+                            var movieList = movieRepository.GetAllMoviesAsync().Result;
                             var movie = DeleteMovieMenu.DisplayRemoveMovieMenu(movieList);
                             movieRepository.RemoveMovie(movie);
                             break;

@@ -10,10 +10,10 @@ namespace ReelRegistry.Repositories
 {
     public class MovieRepository
     {
-        public List<Movie> GetAllMovies()
+        public async Task<List<Movie>> GetAllMoviesAsync()
         {
             using var connection = new SqlConnection(Database.ConnectionString);
-            connection.Open();
+            await connection.OpenAsync();
 
             var movies = new List<Movie>();
 
@@ -26,7 +26,7 @@ namespace ReelRegistry.Repositories
             using var command = new SqlCommand(sql, connection);
             using var reader = command.ExecuteReader();
 
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 var movie = new Movie
                 {
@@ -48,7 +48,7 @@ namespace ReelRegistry.Repositories
         public void AddMovie(Movie movie)
         {
             using var connection = new SqlConnection(Database.ConnectionString);
-            connection.Open();
+            
             string sql = "INSERT INTO Movie (Title, ReleaseYear, GenreId) VALUES (@Title, @ReleaseYear, @GenreId)";
             using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Title", movie.Title);
