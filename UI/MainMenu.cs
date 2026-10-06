@@ -15,7 +15,7 @@ namespace ReelRegistry.UI
 
             var menu = new SelectionPrompt<string>().Title("Registry Menu");
             menu.AddChoice("View all movies");
-            menu.AddChoice("Search for a movie");
+            menu.AddChoice("Search for a movie by genre");
             menu.AddChoice("Add a new movie");
             menu.AddChoice("Remove a movie");
             menu.AddChoice("Exit");

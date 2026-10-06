@@ -8,24 +8,25 @@ namespace ReelRegistry.UI
 {
     public class AddMovieMenu
     {
-        public static Movie DisplayAddMovieMenu()
+        public static Movie DisplayAddMovieMenu(List<Genre> genres)
         {
             AnsiConsole.Clear();
-            AnsiConsole.Markup("Add a New Movie\n");
+            AnsiConsole.MarkupLine("Add a New Movie");
 
             var title = AnsiConsole.Ask<string>("Enter the [green]title[/]:");
-            var year = AnsiConsole.Ask<int>("Enter the [green]year[/]:");  
-            
+            var year = AnsiConsole.Ask<int>("Enter the [green]year[/]:");
+
             var genre = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
+                new SelectionPrompt<Genre>()
                     .Title("Select a [green]genre[/]:")
-                    .AddChoices(new[] { "Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Romance" }));
+                    .UseConverter(g => g.Name)
+                    .AddChoices(genres));
 
             return new Movie
             {
                 Title = title,
                 Year = year,
-                //GenreId = GenreController.GetGenreId(genre)
+                GenreId = genre.Id
             };
         }
     }

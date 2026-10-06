@@ -15,7 +15,7 @@ namespace ReelRegistry.Repositories
             connection.Open();
 
             var genres = new List<Genre>();
-            string sql = "SELECT Id, Name FROM Genres";
+            string sql = "SELECT Id, Name FROM Genre";
 
             using var command = new SqlCommand(sql, connection);
             using var reader = command.ExecuteReader();

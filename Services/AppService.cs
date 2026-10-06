@@ -1,4 +1,5 @@
-﻿using ReelRegistry.UI;
+﻿using ReelRegistry.Repositories;
+using ReelRegistry.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,31 +11,55 @@ namespace ReelRegistry.Services
 
         public static void RunApp()
         {
-            while (true)
-            {
-                var choice = UI.MainMenu.DisplayMainMenu();
+            bool running = true;
+
+            while (running)
+            {    
+                var choice = MainMenu.DisplayMainMenu();
+                var movieRepository = new MovieRepository();
+                var genreRepository = new GenreRepository();            
+
                 switch (choice)
                 {
                     case "View all movies":
-                        var movieRepository = new Repositories.MovieRepository();
-                        var movies = movieRepository.GetAllMovies();
-                        DisplayMovieMenu.DisplayMovies(movies);
-                        break;
-                    case "Search for a movie":                       
-                        
+                        {
+                            var movieList = movieRepository.GetAllMovies();
+                            DisplayMovieMenu.DisplayMovies(movieList);
+                            break;
+                        }
 
-                        break;
+                    case "Search for a movie by genre":
+                        {
+                            var genre = SearchMovieMenu.SearchForMovieByGenre();
+                            var movieList = movieRepository.GetMoviesByGenre(genre);
+                            DisplayMovieMenu.DisplayMovies(movieList);
+                            break;
+                        }
+
                     case "Add a new movie":
-                        // Implement add functionality
-                        break;
+                        {
+                            var genres = genreRepository.GetAllGenres();
+                            var movie = AddMovieMenu.DisplayAddMovieMenu(genres);
+
+                            movieRepository.AddMovie(movie);
+                            break;
+                        }
                     case "Remove a movie":
-                        // Implement remove functionality
-                        break;
+                        {
+                            break;
+                        }
+                        
                     case "Exit":
-                        return;
+                        {
+                            running = false;
+                            break;
+                        }
                     default:
-                        Console.WriteLine("Invalid choice. Please try again.");
-                        break;
+                        {
+                            Console.WriteLine("Invalid choice. Please try again.");
+                            break;
+                        }
+                        
                 }
             }
         }
