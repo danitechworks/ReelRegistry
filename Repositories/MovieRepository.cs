@@ -35,6 +35,8 @@ namespace ReelRegistry.Repositories
                 movies.Add(movie);
             }
 
+            reader.Close();
+
             return movies;
         }
 
