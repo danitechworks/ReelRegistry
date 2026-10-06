@@ -23,7 +23,7 @@ namespace ReelRegistry.Services
                 {
                     case "View all movies":
                         {
-                            var movieList = movieRepository.GetAllMoviesAsync().Result;
+                            var movieList = await movieRepository.GetAllMoviesAsync();
                             DisplayMovieMenu.DisplayMovies(movieList);
                             break;
                         }
@@ -46,9 +46,9 @@ namespace ReelRegistry.Services
                         }
                     case "Remove a movie":
                         {
-                            var movieList = movieRepository.GetAllMoviesAsync().Result;
+                            var movieList = await movieRepository.GetAllMoviesAsync();
                             var movie = DeleteMovieMenu.DisplayRemoveMovieMenu(movieList);
-                            movieRepository.RemoveMovie(movie);
+                            await movieRepository.RemoveMovieAsync(movie);
                             break;
                         }
                         
