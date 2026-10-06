@@ -87,5 +87,18 @@ namespace ReelRegistry.Repositories
             return movies;
         }
 
+        public void RemoveMovie(Movie movie)
+        {
+            using var connection = new SqlConnection(Database.ConnectionString);
+            connection.Open();
+
+            string sql = "DELETE FROM Movie WHERE Id = @Id";
+
+            using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Id", movie.Id);
+
+            command.ExecuteNonQuery();
+        }
+
     }
 }

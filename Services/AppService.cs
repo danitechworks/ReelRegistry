@@ -46,6 +46,9 @@ namespace ReelRegistry.Services
                         }
                     case "Remove a movie":
                         {
+                            var movieList = movieRepository.GetAllMovies();
+                            var movie = DeleteMovieMenu.DisplayRemoveMovieMenu(movieList);
+                            movieRepository.RemoveMovie(movie);
                             break;
                         }
                         
