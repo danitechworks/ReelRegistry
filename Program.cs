@@ -3,15 +3,7 @@ using ReelRegistry.Data;
 using ReelRegistry.Models;
 using ReelRegistry.Repositories;
 using ReelRegistry.UI;  
-using Spectre.Console;  
+using Spectre.Console;
+using ReelRegistry.Services;
 
-var movieRepository = new MovieRepository();
-var movies = movieRepository.GetAllMovies();
-
-foreach (var movie in movies)
-{
-    Console.WriteLine($"Title: {movie.Title}, Year: {movie.Year}");
-}
-
-
-MainMenu.DisplayMainMenu();
+AppService.RunApp();

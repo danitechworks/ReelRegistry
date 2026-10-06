@@ -10,6 +10,7 @@ namespace ReelRegistry.UI
 
         public static string DisplayMainMenu()
         {
+            AnsiConsole.Clear();
             AnsiConsole.Markup("Welcome to ReelRegistry!");
 
             var menu = new SelectionPrompt<string>().Title("Registry Menu");
