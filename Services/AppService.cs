@@ -31,17 +31,17 @@ namespace ReelRegistry.Services
                     case "Search for a movie by genre":
                         {
                             var genre = SearchMovieMenu.SearchForMovieByGenre();
-                            var movieList = movieRepository.GetMoviesByGenre(genre);
+                            var movieList = await movieRepository.GetMoviesByGenreAsync(genre);
                             DisplayMovieMenu.DisplayMovies(movieList);
                             break;
                         }
 
                     case "Add a new movie":
                         {
-                            var genres = genreRepository.GetAllGenres();
+                            var genres = await genreRepository.GetAllGenresAsync();
                             var movie = AddMovieMenu.DisplayAddMovieMenu(genres);
 
-                            movieRepository.AddMovie(movie);
+                            await movieRepository.AddMovieAsync(movie);
                             break;
                         }
                     case "Remove a movie":

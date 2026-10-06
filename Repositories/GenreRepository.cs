@@ -9,18 +9,18 @@ namespace ReelRegistry.Repositories
 {
     public class GenreRepository
     {
-        public List<Genre> GetAllGenres()
+        public async Task<List<Genre>> GetAllGenresAsync()
         {
             using var connection = new SqlConnection(Database.ConnectionString);
-            connection.Open();
+            await connection.OpenAsync();
 
             var genres = new List<Genre>();
             string sql = "SELECT Id, Name FROM Genre";
 
             using var command = new SqlCommand(sql, connection);
-            using var reader = command.ExecuteReader();
+            using var reader = await command.ExecuteReaderAsync();
 
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
                 var genre = new Genre
                 {

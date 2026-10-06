@@ -24,7 +24,7 @@ namespace ReelRegistry.Repositories
                 """;
 
             using var command = new SqlCommand(sql, connection);
-            using var reader = command.ExecuteReader();
+            using var reader = await command.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
             {
@@ -45,22 +45,26 @@ namespace ReelRegistry.Repositories
             return movies;
         }
 
-        public void AddMovie(Movie movie)
+        public async Task AddMovieAsync(Movie movie)
         {
             using var connection = new SqlConnection(Database.ConnectionString);
-            
+            await connection.OpenAsync();
+
             string sql = "INSERT INTO Movie (Title, ReleaseYear, GenreId) VALUES (@Title, @ReleaseYear, @GenreId)";
             using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Title", movie.Title);
             command.Parameters.AddWithValue("@ReleaseYear", movie.Year);
             command.Parameters.AddWithValue("@GenreId", movie.GenreId);
-            command.ExecuteNonQuery();
+            
+            await command.ExecuteNonQueryAsync();
+            
         }
 
-        public List<Movie> GetMoviesByGenre(string genre)
+        public async Task<List<Movie>> GetMoviesByGenreAsync(string genre)
         {
             using var connection = new SqlConnection(Database.ConnectionString);
-            connection.Open();
+            await connection.OpenAsync();
+
             var movies = new List<Movie>();
             string sql = """
                 SELECT m.Id, m.Title, m.ReleaseYear, m.GenreId, g.Name AS GenreName
@@ -70,8 +74,9 @@ namespace ReelRegistry.Repositories
                 """;
             using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@GenreName", genre);
-            using var reader = command.ExecuteReader();
-            while (reader.Read())
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
             {
                 var movie = new Movie
                 {
@@ -84,6 +89,7 @@ namespace ReelRegistry.Repositories
                 movies.Add(movie);
             }
             reader.Close();
+            await connection.CloseAsync();
             return movies;
         }
 
